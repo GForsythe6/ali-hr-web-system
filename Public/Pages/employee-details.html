@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Details</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="/css/output.css">
+
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- SIDEBAR -->
+    <div id="sidebar"></div>
+
+    <!-- MAIN -->
+    <main
+        id="mainContent"
+        class="ml-64 p-8 transition-all duration-300">
+
+        <!-- TOP -->
+        <div class="flex items-center justify-between mb-8">
+
+            <div>
+
+                <a
+                    href="/Pages/employees.html"
+                    class="
+                    text-[#2F4B8F]
+                    font-semibold
+                    mb-3
+                    inline-block
+                    ">
+
+                    ← Back to Employees
+
+                </a>
+
+                <h1
+                    id="employeeName"
+                    class="
+                    text-5xl
+                    font-bold
+                    text-[#2F4B8F]
+                    ">
+
+                    Loading...
+
+                </h1>
+
+                <p
+                    id="employeeId"
+                    class="
+                    text-gray-500
+                    mt-2
+                    text-lg
+                    ">
+
+                </p>
+
+            </div>
+
+            <div>
+
+                <span
+                    id="employeeStatus"
+                    class="
+                    px-5
+                    py-3
+                    rounded-full
+                    text-sm
+                    font-semibold
+                    ">
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- CONTENT -->
+        <div class="grid grid-cols-12 gap-6">
+
+            <!-- LEFT PROFILE -->
+            <div
+                class="
+                col-span-3
+                bg-white
+                rounded-3xl
+                shadow
+                p-6
+                ">
+
+                <!-- IMAGE -->
+                <div class="flex flex-col items-center">
+
+                    <img
+                        id="employeePhoto"
+                        src="/images/default-user.png"
+                        class="
+                        w-32
+                        h-32
+                        rounded-full
+                        object-cover
+                        border-4
+                        border-[#2F4B8F]
+                        ">
+
+                    <h2
+                        id="profileName"
+                        class="
+                        text-2xl
+                        font-bold
+                        mt-5
+                        text-center
+                        ">
+
+                    </h2>
+
+                    <p
+                        id="profilePosition"
+                        class="
+                        text-gray-500
+                        text-center
+                        mt-2
+                        ">
+
+                    </p>
+
+                </div>
+
+                <!-- DETAILS -->
+                <div class="mt-8 space-y-5">
+
+                    <div>
+
+                        <p class="text-gray-400 text-sm">
+                            Team
+                        </p>
+
+                        <p
+                            id="team"
+                            class="font-semibold mt-1">
+
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        <p class="text-gray-400 text-sm">
+                            Client
+                        </p>
+
+                        <p
+                            id="client"
+                            class="font-semibold mt-1">
+
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        <p class="text-gray-400 text-sm">
+                            Work Setup
+                        </p>
+
+                        <p
+                            id="workSetup"
+                            class="font-semibold mt-1">
+
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        <p class="text-gray-400 text-sm">
+                            Probation Start
+                        </p>
+
+                        <p
+                            id="probationStart"
+                            class="font-semibold mt-1">
+
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        <p class="text-gray-400 text-sm">
+                            Probation End
+                        </p>
+
+                        <p
+                            id="probationEnd"
+                            class="font-semibold mt-1">
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT DETAILS -->
+            <div
+                class="
+                col-span-9
+                bg-white
+                rounded-3xl
+                shadow
+                p-8
+                ">
+
+                <!-- TABS -->
+                <div class="flex gap-4 mb-8">
+
+                    <button
+                        onclick="showTab('personal')"
+                        class="
+                        tab-btn
+                        active-tab
+                        ">
+
+                        Personal Info
+
+                    </button>
+
+                    <button
+                        onclick="showTab('employment')"
+                        class="tab-btn">
+
+                        Employment Info
+
+                    </button>
+
+                    <button
+                        onclick="showTab('government')"
+                        class="tab-btn">
+
+                        Government Info
+
+                    </button>
+
+                </div>
+
+                <!-- PERSONAL -->
+                <div
+                    id="personalTab"
+                    class="tab-content">
+
+                    <div class="grid grid-cols-2 gap-6">
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Contact Number
+                            </p>
+
+                            <p
+                                id="contactNum"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Birthdate
+                            </p>
+
+                            <p
+                                id="birthdate"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Gender
+                            </p>
+
+                            <p
+                                id="gender"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Civil Status
+                            </p>
+
+                            <p
+                                id="civilStatus"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Current Address
+                            </p>
+
+                            <p
+                                id="currentAddress"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Permanent Address
+                            </p>
+
+                            <p
+                                id="permanentAddress"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Emergency Contact Person
+                            </p>
+
+                            <p
+                                id="emergencyPerson"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Emergency Contact Number
+                            </p>
+
+                            <p
+                                id="emergencyNumber"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- EMPLOYMENT -->
+                <div
+                    id="employmentTab"
+                    class="
+                    tab-content
+                    hidden
+                    ">
+
+                    <div class="grid grid-cols-2 gap-6">
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Employee ID
+                            </p>
+
+                            <p
+                                id="employmentEmployeeId"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Position
+                            </p>
+
+                            <p
+                                id="employmentPosition"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Team
+                            </p>
+
+                            <p
+                                id="employmentTeam"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Work Status
+                            </p>
+
+                            <p
+                                id="employmentStatus"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- GOVERNMENT -->
+                <div
+                    id="governmentTab"
+                    class="
+                    tab-content
+                    hidden
+                    ">
+
+                    <div class="grid grid-cols-2 gap-6">
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                SSS Number
+                            </p>
+
+                            <p
+                                id="sssNum"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                TIN Number
+                            </p>
+
+                            <p
+                                id="tinNum"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Pagibig Number
+                            </p>
+
+                            <p
+                                id="pagibigNum"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-gray-400">
+                                Philhealth Number
+                            </p>
+
+                            <p
+                                id="philhealthNum"
+                                class="font-semibold mt-2">
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- LAYOUT -->
+    <script src="/js/layout.js"></script>
+
+    <script>
+
+        function showTab(tab){
+
+            document
+                .querySelectorAll(".tab-content")
+                .forEach(content => {
+
+                    content.classList.add("hidden");
+
+                });
+
+            document
+                .querySelectorAll(".tab-btn")
+                .forEach(btn => {
+
+                    btn.classList.remove(
+                        "active-tab"
+                    );
+
+                });
+
+            document
+                .getElementById(tab + "Tab")
+                .classList.remove("hidden");
+
+            event.target.classList.add(
+                "active-tab"
+            );
+
+        }
+
+        async function loadEmployee(){
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+            const id = params.get("id");
+
+            try {
+
+                const response =
+                    await fetch("/api/employees");
+
+                const employees =
+                    await response.json();
+
+                const employee =
+                    employees.find(emp =>
+                        emp.id == id
+                    );
+
+                if(!employee) return;
+
+                /* MICROSOFT PHOTO */
+                document.getElementById(
+                    "employeePhoto"
+                ).src =
+                    `/api/employees/${employee.email}/photo`;
+
+                /* HEADER */
+                document.getElementById(
+                    "employeeName"
+                ).innerText =
+                    employee.employeeName;
+
+                document.getElementById(
+                    "profileName"
+                ).innerText =
+                    employee.employeeName;
+
+                document.getElementById(
+                    "employeeId"
+                ).innerText =
+                    employee.employeeId;
+
+                /* STATUS */
+                const status =
+                    document.getElementById(
+                        "employeeStatus"
+                    );
+
+                status.innerText =
+                    employee.workStatus;
+
+                if(employee.workStatus === "Active"){
+
+                    status.className =
+                        "px-5 py-3 rounded-full text-sm font-semibold bg-green-100 text-green-700";
+
+                } else {
+
+                    status.className =
+                        "px-5 py-3 rounded-full text-sm font-semibold bg-red-100 text-red-700";
+
+                }
+
+                /* PROFILE */
+                document.getElementById(
+                    "profilePosition"
+                ).innerText =
+                    employee.position;
+
+                document.getElementById(
+                    "team"
+                ).innerText =
+                    employee.team;
+
+                document.getElementById(
+                    "client"
+                ).innerText =
+                    employee.client;
+
+                document.getElementById(
+                    "workSetup"
+                ).innerText =
+                    employee.workSetup;
+
+                document.getElementById(
+                    "probationStart"
+                ).innerText =
+                    employee.probationaryStartDate;
+
+                document.getElementById(
+                    "probationEnd"
+                ).innerText =
+                    employee.probationaryEndDate;
+
+                /* PERSONAL */
+                document.getElementById(
+                    "contactNum"
+                ).innerText =
+                    employee.contactNum;
+
+                document.getElementById(
+                    "birthdate"
+                ).innerText =
+                    employee.birthdate;
+
+                document.getElementById(
+                    "gender"
+                ).innerText =
+                    employee.gender;
+
+                document.getElementById(
+                    "civilStatus"
+                ).innerText =
+                    employee.civilStatus;
+
+                document.getElementById(
+                    "currentAddress"
+                ).innerText =
+                    employee.currentAddress;
+
+                document.getElementById(
+                    "permanentAddress"
+                ).innerText =
+                    employee.permanentAddress;
+
+                document.getElementById(
+                    "emergencyPerson"
+                ).innerText =
+                    employee.emergencyContactPerson;
+
+                document.getElementById(
+                    "emergencyNumber"
+                ).innerText =
+                    employee.emergencyContactNum;
+
+                /* EMPLOYMENT */
+                document.getElementById(
+                    "employmentEmployeeId"
+                ).innerText =
+                    employee.employeeId;
+
+                document.getElementById(
+                    "employmentPosition"
+                ).innerText =
+                    employee.position;
+
+                document.getElementById(
+                    "employmentTeam"
+                ).innerText =
+                    employee.team;
+
+                document.getElementById(
+                    "employmentStatus"
+                ).innerText =
+                    employee.workStatus;
+
+                /* GOVERNMENT */
+                document.getElementById(
+                    "sssNum"
+                ).innerText =
+                    employee.sssNum;
+
+                document.getElementById(
+                    "tinNum"
+                ).innerText =
+                    employee.tinNum;
+
+                document.getElementById(
+                    "pagibigNum"
+                ).innerText =
+                    employee.pagibigNum;
+
+                document.getElementById(
+                    "philhealthNum"
+                ).innerText =
+                    employee.philhealthNum;
+
+            } catch(error){
+
+                console.error(error);
+
+            }
+
+        }
+
+        loadEmployee();
+
+    </script>
+
+    <style>
+
+        .tab-btn{
+
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: #EEF2FF;
+            color: #2F4B8F;
+            font-weight: 600;
+
+        }
+
+        .active-tab{
+
+            background: #2F4B8F;
+            color: white;
+
+        }
+
+    </style>
+
+</body>
+
+</html>

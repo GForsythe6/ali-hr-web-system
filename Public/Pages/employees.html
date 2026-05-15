@@ -30,12 +30,31 @@
                 Employees
             </h1>
 
+            <a
+                href="/Pages/add-employee.html"
+                class="
+                bg-[#2F4B8F]
+                hover:bg-[#4B9AD6]
+                text-white
+                px-6
+                py-4
+                rounded-2xl
+                font-semibold
+                text-lg
+                shadow
+                transition
+                ">
+
+                + Add Employee
+
+            </a>
+
         </div>
 
         <!-- FILTERS -->
         <div class="bg-white p-5 rounded-2xl shadow mb-6">
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
 
                 <!-- SEARCH -->
                 <input
@@ -65,6 +84,17 @@
 
                 </select>
 
+                <!-- SORT -->
+                <select
+                    id="sortFilter"
+                    class="p-3 rounded-xl border outline-none focus:border-[#4B9AD6]">
+
+                    <option value="">Sort Probation Date</option>
+                    <option value="asc">Oldest First</option>
+                    <option value="desc">Newest First</option>
+
+                </select>
+
             </div>
 
         </div>
@@ -80,11 +110,29 @@
 
                         <tr>
 
-                            <th class="p-4 text-left">Employee ID</th>
-                            <th class="p-4 text-left">Name</th>
-                            <th class="p-4 text-left">Team</th>
-                            <th class="p-4 text-left">Position</th>
-                            <th class="p-4 text-left">Status</th>
+                            <th class="p-4 text-left">
+                                Employee ID
+                            </th>
+
+                            <th class="p-4 text-left">
+                                Employee Name
+                            </th>
+
+                            <th class="p-4 text-left">
+                                Team
+                            </th>
+
+                            <th class="p-4 text-left">
+                                Position
+                            </th>
+
+                            <th class="p-4 text-left">
+                                Status
+                            </th>
+
+                            <th class="p-4 text-left">
+                                Actions
+                            </th>
 
                         </tr>
 
@@ -116,9 +164,11 @@
 
             try {
 
-                const response = await fetch("/api/employees");
+                const response =
+                    await fetch("/api/employees");
 
-                employees = await response.json();
+                employees =
+                    await response.json();
 
                 renderEmployees(employees);
 
@@ -134,7 +184,10 @@
 
         function renderEmployees(data){
 
-            const table = document.getElementById("employeeTable");
+            const table =
+                document.getElementById(
+                    "employeeTable"
+                );
 
             table.innerHTML = "";
 
@@ -142,22 +195,30 @@
 
                 table.innerHTML += `
 
-                    <tr class="hover:bg-gray-50 transition cursor-pointer">
+                    <tr class="hover:bg-gray-50 transition">
 
                         <td class="p-4">
+
                             ${employee.employeeId || ""}
+
                         </td>
 
                         <td class="p-4 font-semibold">
-                            ${employee.firstName || ""} ${employee.lastName || ""}
+
+                            ${employee.employeeName || ""}
+
                         </td>
 
                         <td class="p-4">
+
                             ${employee.team || ""}
+
                         </td>
 
                         <td class="p-4">
+
                             ${employee.position || ""}
+
                         </td>
 
                         <td class="p-4">
@@ -175,6 +236,27 @@
 
                         </td>
 
+                        <td class="p-4">
+
+                            <a
+                                href="/Pages/employee-details.html?id=${employee.id}"
+                                class="
+                                bg-[#2F4B8F]
+                                hover:bg-[#4B9AD6]
+                                text-white
+                                px-4
+                                py-2
+                                rounded-lg
+                                transition
+                                inline-block
+                                ">
+
+                                View Details
+
+                            </a>
+
+                        </td>
+
                     </tr>
 
                 `;
@@ -185,18 +267,28 @@
 
         function populateTeamFilter(){
 
-            const teamFilter = document.getElementById("teamFilter");
+            const teamFilter =
+                document.getElementById(
+                    "teamFilter"
+                );
 
-            const teams = [...new Set(employees.map(emp => emp.team))];
+            const teams =
+                [...new Set(
+                    employees.map(emp => emp.team)
+                )];
 
             teams.forEach(team => {
 
                 if(team){
 
                     teamFilter.innerHTML += `
+
                         <option value="${team}">
+
                             ${team}
+
                         </option>
+
                     `;
 
                 }
@@ -207,41 +299,97 @@
 
         function applyFilters(){
 
-            const search = document
-                .getElementById("searchInput")
-                .value
-                .toLowerCase();
+            const search =
+                document
+                    .getElementById(
+                        "searchInput"
+                    )
+                    .value
+                    .toLowerCase();
 
-            const team = document
-                .getElementById("teamFilter")
-                .value;
+            const team =
+                document
+                    .getElementById(
+                        "teamFilter"
+                    )
+                    .value;
 
-            const status = document
-                .getElementById("statusFilter")
-                .value;
+            const status =
+                document
+                    .getElementById(
+                        "statusFilter"
+                    )
+                    .value;
 
-            const filtered = employees.filter(emp => {
+            const sort =
+                document
+                    .getElementById(
+                        "sortFilter"
+                    )
+                    .value;
 
-                const fullName = `
-                    ${emp.firstName || ""}
-                    ${emp.lastName || ""}
-                `.toLowerCase();
+            let filtered =
+                employees.filter(emp => {
 
-                return (
+                    const fullName = `
+                        ${emp.employeeName || ""}
+                    `.toLowerCase();
 
-                    fullName.includes(search)
+                    const employeeId = `
+                        ${emp.employeeId || ""}
+                    `.toLowerCase();
 
-                    &&
+                    return (
 
-                    (team === "" || emp.team === team)
+                        (
+                            fullName.includes(search)
+                            ||
+                            employeeId.includes(search)
+                        )
 
-                    &&
+                        &&
 
-                    (status === "" || emp.workStatus === status)
+                        (
+                            team === ""
+                            ||
+                            emp.team === team
+                        )
+
+                        &&
+
+                        (
+                            status === ""
+                            ||
+                            emp.workStatus === status
+                        )
+
+                    );
+
+                });
+
+            if(sort === "asc"){
+
+                filtered.sort((a, b) =>
+
+                    new Date(a.probationaryStartDate)
+                    -
+                    new Date(b.probationaryStartDate)
 
                 );
 
-            });
+            }
+
+            if(sort === "desc"){
+
+                filtered.sort((a, b) =>
+
+                    new Date(b.probationaryStartDate)
+                    -
+                    new Date(a.probationaryStartDate)
+
+                );
+
+            }
 
             renderEmployees(filtered);
 
@@ -249,15 +397,31 @@
 
         document
             .getElementById("searchInput")
-            .addEventListener("input", applyFilters);
+            .addEventListener(
+                "input",
+                applyFilters
+            );
 
         document
             .getElementById("teamFilter")
-            .addEventListener("change", applyFilters);
+            .addEventListener(
+                "change",
+                applyFilters
+            );
 
         document
             .getElementById("statusFilter")
-            .addEventListener("change", applyFilters);
+            .addEventListener(
+                "change",
+                applyFilters
+            );
+
+        document
+            .getElementById("sortFilter")
+            .addEventListener(
+                "change",
+                applyFilters
+            );
 
         loadEmployees();
 

@@ -1,16 +1,31 @@
-require("dotenv").config();
+const { Client } = require("@microsoft/microsoft-graph-client");
 
-const msal = require("@azure/msal-node");
+require("isomorphic-fetch");
 
-const config = {
-  auth: {
-    clientId: process.env.CLIENT_ID,
-    authority: `https://login.microsoftonline.com/${process.env.TENANT_ID}`,
-  },
-};
+const { ClientSecretCredential } = require("@azure/identity");
 
-const pca = new msal.PublicClientApplication(config);
+const credential = new ClientSecretCredential(
+    process.env.TENANT_ID,
+    process.env.CLIENT_ID,
+    process.env.CLIENT_SECRET
+);
 
-module.exports = {
-  pca,
-};
+const graphClient = Client.initWithMiddleware({
+
+    authProvider: {
+
+        getAccessToken: async () => {
+
+            const token = await credential.getToken(
+                "https://graph.microsoft.com/.default"
+            );
+
+            return token.token;
+
+        }
+
+    }
+
+});
+
+module.exports = graphClient;

@@ -28,50 +28,70 @@
         <!-- CARDS -->
         <div class="grid grid-cols-4 gap-6">
 
+            <!-- TOTAL EMPLOYEES -->
             <div class="card">
 
                 <h2 class="text-gray-500">
                     Total Employees
                 </h2>
 
-                <p class="text-4xl font-bold mt-3">
-                    245
+                <p
+                    id="totalEmployees"
+                    class="text-4xl font-bold mt-3">
+
+                    0
+
                 </p>
 
             </div>
 
+            <!-- WFH -->
             <div class="card">
 
                 <h2 class="text-gray-500">
                     WFH
                 </h2>
 
-                <p class="text-4xl font-bold mt-3">
-                    78
+                <p
+                    id="wfhEmployees"
+                    class="text-4xl font-bold mt-3">
+
+                    0
+
                 </p>
 
             </div>
 
+            <!-- ONSITE -->
             <div class="card">
 
                 <h2 class="text-gray-500">
                     Onsite
                 </h2>
 
-                <p class="text-4xl font-bold mt-3">
-                    167
+                <p
+                    id="onsiteEmployees"
+                    class="text-4xl font-bold mt-3">
+
+                    0
+
                 </p>
 
             </div>
 
+            <!-- ACTIVE -->
             <div class="card">
 
                 <h2 class="text-gray-500">
-                    Pending Leaves
+                    Active Employees
                 </h2>
 
-                <p class="text-4xl font-bold mt-3">
-                    12
+                <p
+                    id="activeEmployees"
+                    class="text-4xl font-bold mt-3">
+
+                    0
+
                 </p>
 
             </div>
@@ -80,7 +100,94 @@
 
     </div>
 
+    <!-- LAYOUT -->
     <script src="/js/layout.js"></script>
 
+    <!-- DASHBOARD SCRIPT -->
+    <script>
+
+        async function loadDashboard(){
+
+            try {
+
+                const response =
+                    await fetch("/api/employees");
+
+                const employees =
+                    await response.json();
+
+                /* VALID EMPLOYEES ONLY */
+                const validEmployees =
+                    employees.filter(emp =>
+
+                        emp.employeeId &&
+                        emp.employeeName
+
+                    );
+
+                /* TOTAL */
+                const totalEmployees =
+                    validEmployees.length;
+
+                /* WFH */
+                const wfhEmployees =
+                    validEmployees.filter(emp =>
+
+                        emp.workSetup
+                        ?.toLowerCase()
+                        .trim() === "wfh"
+
+                    ).length;
+
+                /* ONSITE */
+                const onsiteEmployees =
+                    validEmployees.filter(emp =>
+
+                        emp.workSetup
+                        ?.toLowerCase()
+                        .trim() === "onsite"
+
+                    ).length;
+
+                /* ACTIVE */
+                const activeEmployees =
+                    validEmployees.filter(emp =>
+
+                        emp.workStatus
+                        ?.toLowerCase()
+                        .includes("active")
+
+                    ).length;
+
+                /* DISPLAY */
+                document.getElementById(
+                    "totalEmployees"
+                ).innerText = totalEmployees;
+
+                document.getElementById(
+                    "wfhEmployees"
+                ).innerText = wfhEmployees;
+
+                document.getElementById(
+                    "onsiteEmployees"
+                ).innerText = onsiteEmployees;
+
+                document.getElementById(
+                    "activeEmployees"
+                ).innerText = activeEmployees;
+
+            } catch(error){
+
+                console.error(error);
+
+            }
+
+        }
+
+        loadDashboard();
+
+    </script>
+
 </body>
+
 </html>
