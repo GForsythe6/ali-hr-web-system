@@ -1,19 +1,39 @@
 const currentPage = window.location.pathname;
 
+/* SIDEBAR */
 const sidebar = `
 <div id="sidebarContainer"
-    class="w-64 h-screen sidebar text-white fixed left-0 top-0 transition-all duration-300 shadow-2xl">
+    class="w-64 h-screen bg-[#2F4B8F] text-white fixed left-0 top-0
+    transition-all duration-300 shadow-2xl flex flex-col">
 
-    <!-- HEADER -->
-    <div class="flex items-center justify-between p-5 border-b border-blue-400">
+    <!-- LOGO / HEADER -->
+    <div class="flex items-center justify-between p-4 border-b border-[#4B9AD6]">
 
-        <h1 id="sidebarTitle"
-            class="text-2xl font-bold">
-            ALI HR
-        </h1>
+        <div class="flex items-center gap-3 overflow-hidden">
 
-        <button onclick="toggleSidebar()"
-            class="bg-[#4B9AD6] px-3 py-1 rounded-lg hover:bg-[#6DB7E8]">
+            <img
+                src="/images/ali-logo.png"
+                class="w-12 h-12 object-contain flex-shrink-0"
+            />
+
+            <div id="sidebarTitle">
+
+                <h1 class="text-xl font-bold leading-none">
+                    ALI HR
+                </h1>
+
+                <p class="text-xs text-blue-200 mt-1">
+                    Management System
+                </p>
+
+            </div>
+
+        </div>
+
+        <button
+            onclick="toggleSidebar()"
+            class="bg-[#4B9AD6] hover:bg-[#6DB7E8]
+            px-3 py-2 rounded-lg transition">
 
             ☰
 
@@ -24,7 +44,7 @@ const sidebar = `
     <!-- NAVIGATION -->
     <nav class="mt-6 flex flex-col gap-2 px-3">
 
-        <a href="/pages/index.html"
+        <a href="/Pages/index.html"
             class="nav-link ${currentPage.includes('index') ? 'active' : ''}">
 
             <span>📊</span>
@@ -32,7 +52,7 @@ const sidebar = `
 
         </a>
 
-        <a href="/pages/employees.html"
+        <a href="/Pages/employees.html"
             class="nav-link ${currentPage.includes('employees') ? 'active' : ''}">
 
             <span>👥</span>
@@ -40,7 +60,7 @@ const sidebar = `
 
         </a>
 
-        <a href="/pages/attendance.html"
+        <a href="/Pages/attendance.html"
             class="nav-link ${currentPage.includes('attendance') ? 'active' : ''}">
 
             <span>📅</span>
@@ -48,7 +68,7 @@ const sidebar = `
 
         </a>
 
-        <a href="/pages/leave.html"
+        <a href="/Pages/leave.html"
             class="nav-link ${currentPage.includes('leave') ? 'active' : ''}">
 
             <span>📝</span>
@@ -56,7 +76,7 @@ const sidebar = `
 
         </a>
 
-        <a href="/pages/equipment.html"
+        <a href="/Pages/equipment.html"
             class="nav-link ${currentPage.includes('equipment') ? 'active' : ''}">
 
             <span>💻</span>
@@ -64,7 +84,7 @@ const sidebar = `
 
         </a>
 
-        <a href="/pages/reports.html"
+        <a href="/Pages/reports.html"
             class="nav-link ${currentPage.includes('reports') ? 'active' : ''}">
 
             <span>📈</span>
@@ -72,7 +92,7 @@ const sidebar = `
 
         </a>
 
-        <a href="/pages/settings.html"
+        <a href="/Pages/settings.html"
             class="nav-link ${currentPage.includes('settings') ? 'active' : ''}">
 
             <span>⚙️</span>
@@ -82,11 +102,66 @@ const sidebar = `
 
     </nav>
 
+    <!-- FOOTER -->
+    <div class="mt-auto p-4 border-t border-[#4B9AD6]">
+
+        <p class="text-xs text-blue-200 text-center">
+            ALI I.T. SUPPORT SERVICES INC.
+        </p>
+
+    </div>
+
 </div>
 `;
 
 document.getElementById("sidebar").innerHTML = sidebar;
 
+/* TOPBAR */
+const topbar = `
+<header
+    class="h-16 bg-white border-b shadow-sm
+    flex items-center justify-between px-6">
+
+    <div class="flex items-center gap-4">
+
+        <button
+            onclick="history.back()"
+            class="bg-[#2F4B8F] hover:bg-[#4B9AD6]
+            text-white px-4 py-2 rounded-lg transition">
+
+            ← Back
+
+        </button>
+
+        <h1 class="text-2xl font-bold text-[#2F4B8F]">
+            ALI HR SYSTEM
+        </h1>
+
+    </div>
+
+    <div class="flex items-center gap-4">
+
+        <span class="text-gray-500 text-sm">
+            ALI I.T. SUPPORT SERVICES INC.
+        </span>
+
+        <img
+            src="/images/profile.jpg"
+            class="w-10 h-10 rounded-full border object-cover"
+        />
+
+    </div>
+
+</header>
+`;
+
+const topbarContainer = document.getElementById("topbar");
+
+if(topbarContainer){
+    topbarContainer.innerHTML = topbar;
+}
+
+/* COLLAPSE SIDEBAR */
 let collapsed = false;
 
 function toggleSidebar(){
