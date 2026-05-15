@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Employees</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="/css/output.css" />
+
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- SIDEBAR -->
+    <div id="sidebar"></div>
+
+    <!-- MAIN CONTENT -->
+    <main id="mainContent"
+        class="ml-64 p-8 transition-all duration-300">
+
+        <!-- PAGE TITLE -->
+        <div class="flex justify-between items-center mb-8">
+
+            <h1 class="text-5xl font-bold text-[#2F4B8F]">
+                Employees
+            </h1>
+
+        </div>
+
+        <!-- FILTERS -->
+        <div class="bg-white p-5 rounded-2xl shadow mb-6">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                <!-- SEARCH -->
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search employee..."
+                    class="p-3 rounded-xl border outline-none focus:border-[#4B9AD6]"
+                />
+
+                <!-- TEAM FILTER -->
+                <select
+                    id="teamFilter"
+                    class="p-3 rounded-xl border outline-none focus:border-[#4B9AD6]">
+
+                    <option value="">All Teams</option>
+
+                </select>
+
+                <!-- STATUS FILTER -->
+                <select
+                    id="statusFilter"
+                    class="p-3 rounded-xl border outline-none focus:border-[#4B9AD6]">
+
+                    <option value="">All Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <!-- TABLE -->
+        <div class="bg-white rounded-2xl shadow overflow-hidden">
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full">
+
+                    <thead class="bg-[#2F4B8F] text-white">
+
+                        <tr>
+
+                            <th class="p-4 text-left">Employee ID</th>
+                            <th class="p-4 text-left">Name</th>
+                            <th class="p-4 text-left">Team</th>
+                            <th class="p-4 text-left">Position</th>
+                            <th class="p-4 text-left">Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody
+                        id="employeeTable"
+                        class="divide-y">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- LAYOUT -->
+    <script src="/js/layout.js"></script>
+
+    <!-- EMPLOYEE SCRIPT -->
+    <script>
+
+        let employees = [];
+
+        async function loadEmployees(){
+
+            try {
+
+                const response = await fetch("/api/employees");
+
+                employees = await response.json();
+
+                renderEmployees(employees);
+
+                populateTeamFilter();
+
+            } catch(error){
+
+                console.error(error);
+
+            }
+
+        }
+
+        function renderEmployees(data){
+
+            const table = document.getElementById("employeeTable");
+
+            table.innerHTML = "";
+
+            data.forEach(employee => {
+
+                table.innerHTML += `
+
+                    <tr class="hover:bg-gray-50 transition cursor-pointer">
+
+                        <td class="p-4">
+                            ${employee.employeeId || ""}
+                        </td>
+
+                        <td class="p-4 font-semibold">
+                            ${employee.firstName || ""} ${employee.lastName || ""}
+                        </td>
+
+                        <td class="p-4">
+                            ${employee.team || ""}
+                        </td>
+
+                        <td class="p-4">
+                            ${employee.position || ""}
+                        </td>
+
+                        <td class="p-4">
+
+                            <span class="
+                                px-3 py-1 rounded-full text-sm
+                                ${employee.workStatus === 'Active'
+                                    ? 'bg-green-100 text-green-700'
+                                    : 'bg-red-100 text-red-700'}
+                            ">
+
+                                ${employee.workStatus || ""}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+        }
+
+        function populateTeamFilter(){
+
+            const teamFilter = document.getElementById("teamFilter");
+
+            const teams = [...new Set(employees.map(emp => emp.team))];
+
+            teams.forEach(team => {
+
+                if(team){
+
+                    teamFilter.innerHTML += `
+                        <option value="${team}">
+                            ${team}
+                        </option>
+                    `;
+
+                }
+
+            });
+
+        }
+
+        function applyFilters(){
+
+            const search = document
+                .getElementById("searchInput")
+                .value
+                .toLowerCase();
+
+            const team = document
+                .getElementById("teamFilter")
+                .value;
+
+            const status = document
+                .getElementById("statusFilter")
+                .value;
+
+            const filtered = employees.filter(emp => {
+
+                const fullName = `
+                    ${emp.firstName || ""}
+                    ${emp.lastName || ""}
+                `.toLowerCase();
+
+                return (
+
+                    fullName.includes(search)
+
+                    &&
+
+                    (team === "" || emp.team === team)
+
+                    &&
+
+                    (status === "" || emp.workStatus === status)
+
+                );
+
+            });
+
+            renderEmployees(filtered);
+
+        }
+
+        document
+            .getElementById("searchInput")
+            .addEventListener("input", applyFilters);
+
+        document
+            .getElementById("teamFilter")
+            .addEventListener("change", applyFilters);
+
+        document
+            .getElementById("statusFilter")
+            .addEventListener("change", applyFilters);
+
+        loadEmployees();
+
+    </script>
+
+</body>
+
+</html>

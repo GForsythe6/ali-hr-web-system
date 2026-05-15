@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Equipment | ALI HR</title>
+
+    <link rel="stylesheet" href="/css/output.css">
+
+</head>
+
+<body class="bg-gray-100">
+
+    <div id="sidebar"></div>
+
+    <div id="mainContent" class="ml-64 transition-all duration-300">
+
+        <div id="topbar"></div>
+
+        <div class="p-8">
+
+            <div class="flex justify-between items-center mb-8">
+
+                <h1 class="text-4xl font-bold text-[#23408E]">
+                    Equipment
+                </h1>
+
+                <button class="bg-[#23408E] text-white px-6 py-3 rounded-xl hover:bg-[#4B9AD6]">
+                    + Add Equipment
+                </button>
+
+            </div>
+
+            <!-- CARDS -->
+            <div class="grid grid-cols-4 gap-6 mb-8">
+
+                <div class="bg-white p-6 rounded-2xl shadow">
+                    <h2 class="text-gray-500">Total Devices</h2>
+                    <p class="text-4xl font-bold mt-2">120</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow">
+                    <h2 class="text-gray-500">Assigned</h2>
+                    <p class="text-4xl font-bold mt-2">95</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow">
+                    <h2 class="text-gray-500">Available</h2>
+                    <p class="text-4xl font-bold mt-2">25</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow">
+                    <h2 class="text-gray-500">Maintenance</h2>
+                    <p class="text-4xl font-bold mt-2">3</p>
+                </div>
+
+            </div>
+
+            <!-- TABLE -->
+            <div class="bg-white rounded-2xl shadow p-6">
+
+                <h2 class="text-2xl font-semibold mb-4">
+                    Equipment List
+                </h2>
+
+                <table class="w-full">
+
+                    <thead>
+
+                        <tr class="border-b">
+
+                            <th class="text-left py-3">Device</th>
+                            <th class="text-left py-3">Assigned To</th>
+                            <th class="text-left py-3">Department</th>
+                            <th class="text-left py-3">Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr class="border-b">
+
+                            <td class="py-4">Dell Latitude 5420</td>
+                            <td>Glenn Ugay</td>
+                            <td>IT</td>
+
+                            <td class="text-green-600 font-semibold">
+                                Assigned
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="/js/layout.js"></script>
+
+</body>
+</html>

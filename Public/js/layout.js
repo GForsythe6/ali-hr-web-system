@@ -12,6 +12,7 @@ const sidebar = `
         <div class="flex items-center gap-3 overflow-hidden">
 
             <img
+                id="sidebarLogo"
                 src="/images/ali-logo.png"
                 class="w-12 h-12 object-contain flex-shrink-0"
             />
@@ -116,51 +117,6 @@ const sidebar = `
 
 document.getElementById("sidebar").innerHTML = sidebar;
 
-/* TOPBAR */
-const topbar = `
-<header
-    class="h-16 bg-white border-b shadow-sm
-    flex items-center justify-between px-6">
-
-    <div class="flex items-center gap-4">
-
-        <button
-            onclick="history.back()"
-            class="bg-[#2F4B8F] hover:bg-[#4B9AD6]
-            text-white px-4 py-2 rounded-lg transition">
-
-            ← Back
-
-        </button>
-
-        <h1 class="text-2xl font-bold text-[#2F4B8F]">
-            ALI HR SYSTEM
-        </h1>
-
-    </div>
-
-    <div class="flex items-center gap-4">
-
-        <span class="text-gray-500 text-sm">
-            ALI I.T. SUPPORT SERVICES INC.
-        </span>
-
-        <img
-            src="/images/profile.jpg"
-            class="w-10 h-10 rounded-full border object-cover"
-        />
-
-    </div>
-
-</header>
-`;
-
-const topbarContainer = document.getElementById("topbar");
-
-if(topbarContainer){
-    topbarContainer.innerHTML = topbar;
-}
-
 /* COLLAPSE SIDEBAR */
 let collapsed = false;
 
@@ -170,6 +126,7 @@ function toggleSidebar(){
     const content = document.getElementById("mainContent");
     const texts = document.querySelectorAll(".link-text");
     const title = document.getElementById("sidebarTitle");
+    const logo = document.getElementById("sidebarLogo");
 
     collapsed = !collapsed;
 
@@ -182,6 +139,10 @@ function toggleSidebar(){
         content.classList.add("ml-20");
 
         title.style.display = "none";
+
+        if(logo){
+            logo.style.display = "none";
+        }
 
         texts.forEach(text => {
             text.style.display = "none";
@@ -196,6 +157,10 @@ function toggleSidebar(){
         content.classList.add("ml-64");
 
         title.style.display = "block";
+
+        if(logo){
+            logo.style.display = "block";
+        }
 
         texts.forEach(text => {
             text.style.display = "inline";
