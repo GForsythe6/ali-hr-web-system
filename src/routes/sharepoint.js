@@ -2,14 +2,18 @@ const express = require("express");
 
 const router = express.Router();
 
-const graphClient = require("../services/graphService");
+const graphClient =
+    require("../services/graphService");
 
 /* TEST ROUTE */
 router.get("/test", async (req, res) => {
 
     res.json({
+
         success: true,
-        message: "HR SharePoint API route working",
+        message:
+            "HR SharePoint API route working"
+
     });
 
 });
@@ -19,105 +23,63 @@ router.get("/employees", async (req, res) => {
 
     try {
 
-        const response = await graphClient
-            .api(
-                `/sites/${process.env.SHAREPOINT_SITE_ID}/lists/${process.env.EMPLOYEE_LIST_ID}/items?$expand=fields`
-            )
-            .get();
+        const response =
+            await graphClient
+                .api(
+                    `/sites/${process.env.SHAREPOINT_SITE_ID}/lists/${process.env.EMPLOYEE_LIST_ID}/items?$expand=fields`
+                )
+                .get();
 
-        const employees = response.value.map(item => ({
+        const employees =
+            response.value.map(item => ({
 
-            id: item.id,
+                id:
+                    item.id || "",
 
-            employeeId:
-                item.fields.EmployeeID || "",
+                employeeId:
+                    item.fields.EmployeeID || "",
 
-            employeeName:
-                item.fields.EmployeeName ||
-                item.fields.Title ||
-                "",
+                employeeName:
+                    item.fields.Title || "",
 
-            email:
-                item.fields.Email || "",
+                firstName:
+                    item.fields.FirstName || "",
 
-            firstName:
-                item.fields.FirstName || "",
+                lastName:
+                    item.fields.LastName || "",
 
-            middleName:
-                item.fields.MiddleName || "",
+                team:
+                    item.fields.Team || "",
 
-            lastName:
-                item.fields.LastName || "",
+                position:
+                    item.fields.Position || "",
 
-            team:
-                item.fields.Team || "",
+                workStatus:
+                    item.fields.WorkStatus || "",
 
-            position:
-                item.fields.Position || "",
+                email:
+                    item.fields.Email || ""
 
-            client:
-                item.fields.Client || "",
-
-            workStatus:
-                item.fields.WorkStatus || "",
-
-            workSetup:
-                item.fields.WorkSetup || "",
-
-            probationaryStartDate:
-                item.fields.ProbationaryStartDate || "",
-
-            probationaryEndDate:
-                item.fields.ProbationaryEndDate || "",
-
-            contactNum:
-                item.fields.ContactNum || "",
-
-            emergencyContactNum:
-                item.fields.EmergencyContactNum || "",
-
-            emergencyContactPerson:
-                item.fields.EmergencyContactPerson || "",
-
-            permanentAddress:
-                item.fields.PermanentAddress || "",
-
-            currentAddress:
-                item.fields.CurrentAddress || "",
-
-            birthdate:
-                item.fields.Birthdate || "",
-
-            civilStatus:
-                item.fields.CivilStatus || "",
-
-            gender:
-                item.fields.Gender || "",
-
-            philhealthNum:
-                item.fields.PhilhealthNum || "",
-
-            pagibigNum:
-                item.fields.PagibigNum || "",
-
-            sssNum:
-                item.fields.SSSNum || "",
-
-            tinNum:
-                item.fields.TINNum || ""
-
-        }));
+            }));
 
         res.json(employees);
 
-    } catch (error) {
+    } catch(error){
 
-        console.error(error);
+        console.log(
+            JSON.stringify(
+                error,
+                null,
+                2
+            )
+        );
 
         res.status(500).json({
+
             success: false,
-            message: error.message,
-            error: error
+            message:
+                error.message
+
         });
 
     }
@@ -125,28 +87,122 @@ router.get("/employees", async (req, res) => {
 });
 
 /* GET EMPLOYEE PHOTO */
-router.get("/employees/:email/photo", async (req, res) => {
+router.get(
+    "/employees/:email/photo",
+    async (req, res) => {
+
+        try {
+
+            const email =
+                req.params.email;
+
+            const photo =
+                await graphClient
+                    .api(
+                        `/users/${email}/photo/$value`
+                    )
+                    .responseType(
+                        "arraybuffer"
+                    )
+                    .get();
+
+            res.writeHead(
+                200,
+                {
+
+                    "Content-Type":
+                        "image/jpeg",
+
+                    "Content-Length":
+                        photo.length
+
+                }
+            );
+
+            res.end(
+                Buffer.from(photo),
+                "binary"
+            );
+
+        } catch(error){
+
+            console.log(error);
+
+            res.status(404).send(
+                "No photo found"
+            );
+
+        }
+
+    }
+);
+
+/* ADD EMPLOYEE */
+router.post("/employees", async (req, res) => {
 
     try {
 
-        const email = req.params.email;
-
-        const photo = await graphClient
-            .api(`/users/${email}/photo/$value`)
-            .getStream();
-
-        res.setHeader(
-            "Content-Type",
-            "image/jpeg"
+        console.log(
+            "REQ BODY:",
+            req.body
         );
 
-        photo.pipe(res);
+        const {
+
+            firstName,
+            lastName
+
+        } = req.body;
+
+        const response =
+            await graphClient
+                .api(
+                    `/sites/${process.env.SHAREPOINT_SITE_ID}/lists/${process.env.EMPLOYEE_LIST_ID}/items`
+                )
+                .post({
+
+                    fields: {
+
+                        Title:
+                            `${firstName} ${lastName}`,
+
+                        FirstName:
+                            firstName || "",
+
+                        LastName:
+                            lastName || ""
+
+                    }
+
+                });
+
+        res.json({
+
+            success: true,
+            data: response
+
+        });
 
     } catch(error){
 
-        console.error(error);
+        console.log(
+            JSON.stringify(
+                error,
+                null,
+                2
+            )
+        );
 
-        res.status(404).send("No photo");
+        res.status(500).json({
+
+            success: false,
+            message:
+                error.message,
+
+            fullError:
+                error
+
+        });
 
     }
 
