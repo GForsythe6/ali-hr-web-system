@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | ALI HR</title>
+
+    <link rel="stylesheet" href="/css/output.css">
+
+</head>
+
+<body class="bg-gray-100">
+
+    <div id="sidebar"></div>
+
+    <div id="mainContent" class="ml-64 transition-all duration-300">
+
+        <div id="topbar"></div>
+
+        <div class="p-8">
+
+            <h1 class="text-4xl font-bold text-[#23408E] mb-8">
+                Settings
+            </h1>
+
+            <div class="grid grid-cols-2 gap-6">
+
+                <!-- PROFILE -->
+                <div class="bg-white rounded-2xl shadow p-8">
+
+                    <h2 class="text-2xl font-semibold mb-6">
+                        Profile Settings
+                    </h2>
+
+                    <div class="space-y-5">
+
+                        <div>
+                            <label class="text-sm text-gray-500">
+                                Full Name
+                            </label>
+
+                            <input type="text"
+                                value="Glenn Ugay"
+                                class="w-full mt-2 p-4 rounded-xl border">
+                        </div>
+
+                        <div>
+                            <label class="text-sm text-gray-500">
+                                Email
+                            </label>
+
+                            <input type="email"
+                                value="support@alisupportservices.com"
+                                class="w-full mt-2 p-4 rounded-xl border">
+                        </div>
+
+                        <button class="bg-[#23408E] text-white px-6 py-3 rounded-xl">
+                            Save Changes
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- SYSTEM -->
+                <div class="bg-white rounded-2xl shadow p-8">
+
+                    <h2 class="text-2xl font-semibold mb-6">
+                        System Settings
+                    </h2>
+
+                    <div class="space-y-5">
+
+                        <div class="flex justify-between items-center">
+
+                            <span>Email Notifications</span>
+
+                            <input type="checkbox" checked>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+
+                            <span>Dark Mode</span>
+
+                            <input type="checkbox">
+                        </div>
+
+                        <div class="flex justify-between items-center">
+
+                            <span>Auto Backup</span>
+
+                            <input type="checkbox" checked>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="/js/layout.js"></script>
+
+</body>
+</html>

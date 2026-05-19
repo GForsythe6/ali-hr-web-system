@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="/css/output.css">
+
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- SIDEBAR -->
+    <div id="sidebar"></div>
+
+    <!-- MAIN CONTENT -->
+    <div id="mainContent"
+        class="ml-64 p-10 transition-all duration-300">
+
+        <h1 class="text-4xl font-bold page-title mb-8">
+            Dashboard
+        </h1>
+
+        <!-- CARDS -->
+        <div class="grid grid-cols-4 gap-6">
+
+            <!-- TOTAL EMPLOYEES -->
+            <div class="card">
+
+                <h2 class="text-gray-500">
+                    Total Employees
+                </h2>
+
+                <p
+                    id="totalEmployees"
+                    class="text-4xl font-bold mt-3">
+
+                    0
+
+                </p>
+
+            </div>
+
+            <!-- WFH -->
+            <div class="card">
+
+                <h2 class="text-gray-500">
+                    WFH
+                </h2>
+
+                <p
+                    id="wfhEmployees"
+                    class="text-4xl font-bold mt-3">
+
+                    0
+
+                </p>
+
+            </div>
+
+            <!-- ONSITE -->
+            <div class="card">
+
+                <h2 class="text-gray-500">
+                    Onsite
+                </h2>
+
+                <p
+                    id="onsiteEmployees"
+                    class="text-4xl font-bold mt-3">
+
+                    0
+
+                </p>
+
+            </div>
+
+            <!-- ACTIVE -->
+            <div class="card">
+
+                <h2 class="text-gray-500">
+                    Active Employees
+                </h2>
+
+                <p
+                    id="activeEmployees"
+                    class="text-4xl font-bold mt-3">
+
+                    0
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- LAYOUT -->
+    <script src="/js/layout.js"></script>
+
+    <!-- DASHBOARD SCRIPT -->
+    <script>
+
+        async function loadDashboard(){
+
+            try {
+
+                const response =
+                    await fetch("/api/employees");
+
+                const employees =
+                    await response.json();
+
+                /* VALID EMPLOYEES ONLY */
+                const validEmployees =
+                    employees.filter(emp =>
+
+                        emp.employeeId &&
+                        emp.employeeName
+
+                    );
+
+                /* TOTAL */
+                const totalEmployees =
+                    validEmployees.length;
+
+                /* WFH */
+                const wfhEmployees =
+                    validEmployees.filter(emp =>
+
+                        emp.workSetup
+                        ?.toLowerCase()
+                        .trim() === "wfh"
+
+                    ).length;
+
+                /* ONSITE */
+                const onsiteEmployees =
+                    validEmployees.filter(emp =>
+
+                        emp.workSetup
+                        ?.toLowerCase()
+                        .trim() === "onsite"
+
+                    ).length;
+
+                /* ACTIVE */
+                const activeEmployees =
+                    validEmployees.filter(emp =>
+
+                        emp.workStatus
+                        ?.toLowerCase()
+                        .includes("active")
+
+                    ).length;
+
+                /* DISPLAY */
+                document.getElementById(
+                    "totalEmployees"
+                ).innerText = totalEmployees;
+
+                document.getElementById(
+                    "wfhEmployees"
+                ).innerText = wfhEmployees;
+
+                document.getElementById(
+                    "onsiteEmployees"
+                ).innerText = onsiteEmployees;
+
+                document.getElementById(
+                    "activeEmployees"
+                ).innerText = activeEmployees;
+
+            } catch(error){
+
+                console.error(error);
+
+            }
+
+        }
+
+        loadDashboard();
+
+    </script>
+
+</body>
+
+</html>

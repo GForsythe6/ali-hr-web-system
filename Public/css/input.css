@@ -1,1 +1,53 @@
 @import "tailwindcss";
+
+body{
+    font-family: Arial, sans-serif;
+    background-color: #F5F7FA;
+}
+
+/* SIDEBAR */
+.sidebar{
+    background-color: #234E8F;
+}
+
+/* NAVIGATION */
+.nav-link{
+    @apply flex items-center gap-4 p-3 rounded-xl transition-all duration-300;
+    color: white;
+}
+
+.nav-link:hover{
+    background-color: #4B9AD6;
+}
+
+.nav-link.active{
+    background-color: #4B9AD6;
+}
+
+/* CARDS */
+.card{
+    @apply bg-white rounded-2xl shadow p-6;
+}
+
+/* PAGE TITLE */
+.page-title{
+    color: #1E4F8A;
+}
+
+/* BUTTONS */
+.primary-btn{
+    background-color: #4B9AD6;
+    color: white;
+
+    @apply px-5 py-3 rounded-xl font-semibold transition-all duration-300;
+}
+
+.primary-btn:hover{
+    background-color: #1E4F8A;
+}
+
+/* ACTIVE TAB */
+.tab-active{
+    background-color: #234E8F;
+    color: white;
+}
